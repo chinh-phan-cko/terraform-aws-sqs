@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadAccessToSqs",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:DeleteMessage",
+        "sqs:DeleteMessageBatch",
+        "sqs:ReceiveMessage",
+        "sqs:Get*",
+        "sqs:List*"
+      ],
+      "Resource": "${sqs_arn}"
+    }
+  ]
+}

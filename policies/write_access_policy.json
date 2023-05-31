@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "WriteAccessToSqs",
+      "Effect": "Allow",
+      "Action": "sqs:SendMessage",
+      "Resource": "${sqs_arn}"
+    }
+  ]
+}
