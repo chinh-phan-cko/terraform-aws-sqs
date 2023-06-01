@@ -1,5 +1,8 @@
+
 locals {
   notification_channel = var.notification_channel_override != "" ? var.notification_channel_override : "slack-techfinance-${var.product}-${var.environment}-alerts"
+  alert_notification_channels = var.alert_notification_channels != [] ? "{{#is_alert}} ${join("\n", formatlist("@%s", var.alert_notification_channels))}{{/is_alert}}" : ""
+  alert_recovery_notification_channels = var.alert_recovery_notification_channels != [] ? "{{#is_alert_recovery}} ${join("\n", formatlist("@%s", var.alert_recovery_notification_channels))}{{/is_alert_recovery}}" : "" 
   datadog_tags = [
     "terraform",
     "techfinance",

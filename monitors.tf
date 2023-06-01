@@ -7,7 +7,7 @@ resource "datadog_monitor" "queue_high_latency" {
   count   = var.alert_high_latency_in_queue_enabled ? 1 : 0
   name    = "[${var.product}] High latency on SQS queue '${aws_sqs_queue.queue.name}'"
   type    = "query alert"
-  message = "## Link to Runbook\n${var.alert_high_latency_in_queue_runbook_link}\n\n## Description\n${var.alert_high_latency_in_queue_description}\n\n## Notifies\n@${local.notification_channel}"
+  message = "## Link to Runbook\n${var.alert_high_latency_in_queue_runbook_link}\n\n## Description\n${var.alert_high_latency_in_queue_description}\n\n## Notifies\n@${local.notification_channel} \n ${local.alert_notification_channels} \n ${local.alert_recovery_notification_channels}"
   query   = "avg(${var.alert_high_latency_in_queue_time_period}):avg:aws.sqs.approximate_age_of_oldest_message{aws_account:${data.aws_caller_identity.current.account_id},queuename:${aws_sqs_queue.queue.name}} > ${var.alert_high_latency_in_queue_critical_threshold}"
 
   monitor_thresholds {
@@ -30,7 +30,7 @@ resource "datadog_monitor" "high_message_count" {
   count   = var.alert_high_number_messages_in_queue_enabled ? 1 : 0
   name    = "[${var.product}] High pending message count on SQS queue '${aws_sqs_queue.queue.name}'"
   type    = "query alert"
-  message = "## Link to Runbook\n${var.alert_high_number_messages_in_queue_runbook_link}\n\n## Description\n${var.alert_high_number_messages_in_queue_description}\n\n## Notifies\n@${local.notification_channel}"
+  message = "## Link to Runbook\n${var.alert_high_number_messages_in_queue_runbook_link}\n\n## Description\n${var.alert_high_number_messages_in_queue_description}\n\n## Notifies\n@${local.notification_channel}\n ${local.alert_notification_channels} \n ${local.alert_recovery_notification_channels}"
   query   = "avg(${var.alert_high_number_messages_in_queue_time_period}):avg:aws.sqs.approximate_number_of_messages_visible{aws_account:${data.aws_caller_identity.current.account_id},queuename:${aws_sqs_queue.queue.name}} > ${var.alert_high_number_messages_in_queue_critical_threshold}"
 
   monitor_thresholds {
@@ -73,7 +73,7 @@ resource "datadog_monitor" "messages_in_dlq" {
   count   = var.alert_messages_in_deadletter_queue_enabled && var.dead_letter_queue ? 1 : 0
   name    = "[${var.product}] Messages on SQS deadletter queue '${aws_sqs_queue.dead_letter_queue[0].name}'"
   type    = "query alert"
-  message = "## Link to Runbook\n${var.alert_messages_in_deadletter_queue_runbook_link}\n\n## Description\n${var.alert_messages_in_deadletter_queue_description}\n\n## Notifies\n@${local.notification_channel}"
+  message = "## Link to Runbook\n${var.alert_messages_in_deadletter_queue_runbook_link}\n\n## Description\n${var.alert_messages_in_deadletter_queue_description}\n\n## Notifies\n@${local.notification_channel} \n ${local.alert_notification_channels} \n ${local.alert_recovery_notification_channels}"
   query   = "avg(${var.alert_messages_in_deadletter_queue_time_period}):avg:aws.sqs.approximate_number_of_messages_visible{aws_account:${data.aws_caller_identity.current.account_id},queuename:${aws_sqs_queue.dead_letter_queue[0].name}} > ${var.alert_messages_in_deadletter_queue_critical_threshold}"
 
   monitor_thresholds {

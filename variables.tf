@@ -127,6 +127,14 @@ variable "notification_channel_override" {
   default     = ""
 }
 
+variable "alert_notification_channels" {
+  description = "Allows including alert notification channels for Datadog alerting"
+  default = []
+}
+variable "alert_recovery_notification_channels" {
+  description = "Allows including alert recovery notification channels for Datadog alerting"
+  default = []
+}
 variable "enable_redrive_policy_on_dlq" {
   description = "Enable redrive policy on DLQ"
   default     = false
